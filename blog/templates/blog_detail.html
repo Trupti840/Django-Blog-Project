@@ -1,0 +1,261 @@
+{% extends 'base.html'%} {% block title %} {{post.title_tag}} {% endblock %}
+{%block content %}
+<style>
+    .breadcrumb-1{
+      float: right;
+      background-color: #f0f1f7;
+  }
+    }
+</style>
+<div class="row mt-2">
+  <div class="ms-md-1 ms-0 mt-2">
+    <nav>
+      <ol class="breadcrumb mb-0 breadcrumb-1">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <a href="#">Blog Detail</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-xl-8">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card custom-card">
+          <div class="card-body">
+            <p class="fs-18 fw-semibold mb-1">{{ post.title }}</p>
+            <div class="d-sm-flex align-items-cneter">
+              <div class="d-flex align-items-center flex-fill">
+                <span class="avatar avatar-sm avatar-rounded me-3">
+                  <img src="../static/blog/img/faces/{{post.id}}.jpg" alt="" />
+                </span>
+                <div>
+                  <p class="mb-0 fw-semibold">
+                    {{ post.author.username }} -
+                    <span class="fs-11 text-muted fw-normal"
+                      >{{ post.created_on}}</span
+                    >
+                  </p>
+                  <p class="mb-0 text-muted"></p>
+                </div>
+              </div>
+              <div class="mt-sm-0 mt-2">
+                {% for category in categories %}
+                <span class="badge bg-primary me-1">{{category.name}}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <a href="javascript:void(0);">
+            <img
+              src="../static/blog/img/media-{{post.id}}.jpg"
+              class="card-img rounded-0 blog-details-img"
+              alt="..."
+            />
+          </a>
+          <div class="card-body border-bottom border-block-end-dashed">
+            <div
+              class="d-sm-flex d-block align-items-center justify-content-between"
+            >
+              <div class="d-flex align-items-cener">
+                <span class="badge bg-success-transparent me-3">
+                  <i
+                    class="ri-thumb-up-line me-1 align-middle d-inline-block"
+                  ></i>
+                  32 Likes
+                </span>
+                <span class="badge bg-info-transparent me-3">
+                  <i
+                    class="ri-chat-4-line me-1 align-middle d-inline-block"
+                  ></i>
+                  {{post.comment_set.count}} Comments
+                </span>
+              </div>
+              <div class="btn-list mt-sm-0 mt-2">
+                <button
+                  class="btn btn-icon btn-sm btn-primary-light"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-title="Like"
+                >
+                  <i class="ri-thumb-up-line"></i>
+                </button>
+                <button
+                  class="btn btn-icon btn-sm btn-primary-light"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-title="Share"
+                >
+                  <i class="ri-share-line"></i>
+                </button>
+                <a
+                  href="{% url 'create_comment' post_id=post.pk %}"
+                  class="btn btn-sm btn-secondary-light"
+                >
+                  <i class="ri-chat-4-line me-1 align-middle d-inline-block"></i
+                  >Comment
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="fw-semibold">
+              {% comment %} Seeing with “fresh eyes” – A deeper nature
+              experience {% endcomment %}
+            </h6>
+            <p class="mb-4 text-muted">{{ post.body }}</p>
+            <div class="card custom-card bg-light mb-5 shadow-none d-none">
+              <a href="javascript:void(0);" class="card-anchor"></a>
+              <div class="card-body">
+                <blockquote class="blockquote mb-0 text-center">
+                  <p class="fs-16 fw-semibold mb-2 text-dark"></p>
+                  <footer class="blockquote-footer mt-2 fs-14 op-7">
+                    Someone famous as
+                    <cite title="Source Title">-Alice Walker</cite>
+                  </footer>
+                </blockquote>
+              </div>
+            </div>
+            <p class="mb-5 text-muted"></p>
+            <p class="text-center">
+              <button class="btn btn-primary d-none">Load More</button>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-12">
+        <div class="card custom-card">
+          <div class="card-header">
+            <div class="card-title">Comments</div>
+          </div>
+          <div class="card-body">
+            <div class="row gy-3">
+              {% for comment in post.comment_set.all %}
+              <div class="card-body">
+                <li>{{ comment.body }} - By: {{ comment.author }}</li>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="text-end">
+              <a
+                href="{% url 'create_comment' post_id=post.pk %}"
+                class="btn btn-primary-light"
+                >Comment on post</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card custom-card">
+          <div class="card-body text-center p-4">
+            <span class="avatar avatar-rounded avatar-xxl mb-3">
+              <img src="../static/blog/img/faces/{{post.id}}.jpg" alt="img" />
+            </span>
+            <p class="mb-1 fs-15 fw-semibold text-dark lh-1">
+              {{post.author.username}}
+            </p>
+            <p class="fs-12 text-muted mb-1">
+              <span>{{post.author.email}}</span>
+            </p>
+            <p class="text-muted mb-0 p-3 pb-0">
+              It is a long established fact that a reader will be distracted by
+              the readable content of a page when looking at its layout. The
+              point of using Lorem Ipsum is that it has a more-or-less normal
+              distribution
+            </p>
+          </div>
+          <div class="card-footer border-block-start-dashed text-center">
+            <div class="btn-list">
+              <div class="btn-list">
+                <button
+                  class="btn btn-sm btn-icon btn-primary-light btn-wave waves-effect waves-light"
+                >
+                  <i class="ri-facebook-line"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-icon btn-secondary-light btn-wave waves-effect waves-light"
+                >
+                  <i class="ri-twitter-line"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-icon btn-warning-light btn-wave waves-effect waves-light"
+                >
+                  <i class="ri-instagram-line"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-icon btn-success-light btn-wave waves-effect waves-light"
+                >
+                  <i class="ri-github-line"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-icon btn-danger-light btn-wave waves-effect waves-light"
+                >
+                  <i class="ri-youtube-line"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-12">
+        <div class="card custom-card">
+          <div class="card-header">
+            <div class="card-title">Recent Posts</div>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              {% for post in latest_posts %}
+              <li class="list-group-item">
+                <div class="d-flex gap-3 flex-wrap align-items-center">
+                  <span class="avatar avatar-xl">
+                    <img
+                      src="../static/blog/img/media-{{post.id}}.jpg"
+                      class="img-fluid"
+                      alt="..."
+                    />
+                  </span>
+                  <div class="flex-fill">
+                    <a
+                      href="{% url 'blog_detail' post.pk%}"
+                      class="fs-14 fw-semibold mb-0"
+                      >{{post.title}}</a
+                    >
+                    <p class="mb-1 popular-blog-content text-truncate">
+                      {{post.body}}
+                    </p>
+                    <span class="text-muted fs-11">{{post.created_on}}</span>
+                  </div>
+                  <div>
+                    <a
+                      href="{% url 'blog_detail' post.pk%}"
+                      class="btn btn-icon btn-light btn-sm rtl-rotate"
+                    >
+                      <i class="ri-arrow-right-s-line"></i>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+              <li class="list-group-item text-center">
+                <a href="{% url 'home' %}" class="btn btn-primary-light"
+                  >Load more</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

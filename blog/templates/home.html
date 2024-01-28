@@ -1,0 +1,45 @@
+{% extends 'base.html'%} 
+{% block title %}All Blogs {% endblock %}
+{% block content %}
+<div class="container" style="
+margin-top: 1rem;"> 
+  <div class="card custom-card">
+  <div class="card-header d-flex align-items-center justify-content-between">
+      <div class="card-title">
+          Featured Blogs
+      </div>
+      <div>
+          <span class="badge bg-primary-transparent">{{ posts.count }} Blogs</span>
+      </div>
+  </div>
+  <div class="card-body">
+      <ul class="list-group">
+        {% for post in posts %}
+          <li class="list-group-item">
+              <div class="d-flex flex-wrap align-items-center">
+                  <span class="avatar avatar-xl me-3">
+                      <img src="../static/blog/img/media-{{post.id}}.jpg" class="img-fluid" alt="...">
+                  </span>
+                  <div class="flex-fill">
+                      <a href="{% url 'blog_detail' post.pk%}" class="fs-14 fw-semibold mb-0">{{ post.title }}
+                      <p class="mb-1 popular-blog-content text-truncate">
+                        {{ post.body}}
+                      </p>
+                      <span class="text-muted fs-11">{{ post.created_on}}</span>
+                  </div>
+                  <div>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'delete_blog' post.pk %}" class="btn btn-danger-light btn-sm me-2"> Delete </a>
+                    <a href="{% url 'create_comment' post_id=post.pk %}" class="btn btn-warning-light btn-sm"> Comment </a>
+                 
+                    {% endif %}
+                    <a href="{% url 'blog_detail' post.pk%}" class="btn btn-icon btn-light btn-sm rtl-rotate"><i class="ri-arrow-right-s-line"></i></a>
+                  </div>
+              </div>
+          </li>
+        {% endfor %}
+      </ul>
+  </div>
+  </div>  
+</div>
+{% endblock%}

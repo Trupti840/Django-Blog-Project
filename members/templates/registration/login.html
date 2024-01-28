@@ -1,0 +1,18 @@
+{% extends 'base.html'%} 
+{%block title %}
+  Login Page
+{% endblock %}
+
+{%block content %}
+
+<div class="card text-white bg-dark mb-3">
+  <div class="card-header d-flex justify-content-center">ForBloggers Login</div>
+  <div class="card-body">
+    <div class="form-group">
+      <form method="Post" class="mt-4">
+        {% csrf_token %} {{ form.as_p }}
+        <button class="btn btn-primary d-flex justify-content-center">Login</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

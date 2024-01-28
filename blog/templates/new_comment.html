@@ -1,0 +1,23 @@
+{% extends 'base.html'%} 
+{%block title %}
+  Create Comment
+{% endblock %}
+
+{%block content %}
+{% if user.is_authenticated %}
+  <div class="card text-white bg-dark mb-3">
+    <div class="card-header d-flex justify-content-center">Create Comment</div>
+    <div class="card-body">
+      <div class="form-group">
+        <form method="POST" class="mt-4">
+          {% csrf_token %} {{ form.as_p }}
+          <button class="btn btn-primary d-flex justify-content-center">Comment</button>
+      </div>
+    </div>
+  </div>
+{% else %}
+<div class="card text-center mt-5">
+  You're Not Allowed!!
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html'%} 
+{%block title %}
+  Delete Blog
+{% endblock %}
+
+{%block content %}
+{% if user.is_authenticated %}
+
+<div class="card text-white bg-dark mb-3">
+  <div class="card-header d-flex justify-content-center">Delete Blog</div>
+  <div class="card-body">
+    <div class="form-group">
+      <form method="Post" class="mt-4">
+        <p> Are you sure you wanna remove {{ post.title }}</p>
+        {% csrf_token %} 
+        <button class="btn btn-danger btn-sm">Delete</button>
+        <a href="{% url 'blog_detail' post.pk%}" class="btn btn-secondary btn-sm"> Cancel </a>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="card text-center mt-5">
+  You're Not Allowed!!
+</div>
+{% endif %}
+{% endblock %}
